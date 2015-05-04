@@ -1,7 +1,9 @@
 <template>
     <style>
         form {
-            padding: 10px 20px;
+            padding: 10px 20px 15px 20px;
+            background-color: #FFF;
+            border-radius: 5px;
         }
         label {
             font-size: 18px;
@@ -13,18 +15,36 @@
             border: solid 1px #CCCCCC;
             border-radius: 5px;
             height: 120px;
+            font-family: 'The Girl Next Door', cursive;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .controls {
+            text-align: right;
         }
         button {
-            padding: 0 20px;
+            border: 0 none;
+            border-radius: 2px 2px 2px 2px;
+            color: #FFF;
+            text-shadow: #728799 0 1px 1px;
+            font-weight: bold;
+            padding-top: 5px;;
+            font-family: 'The Girl Next Door', cursive;
+            font-size: 16px;
             line-height: 30px;
-            border-radius: 5px;
-            float: right;
+            text-transform: none;
+            width: 80px;
+            text-align: center;
+            background-color: #b6daff;
+            box-shadow: #728799 1px 1px 1px;
         }
     </style>
     <form name="newEntry">
         <div><label for="entry">New Entry:</label></div>
         <textarea id="entry" name="entry"></textarea>
-        <button type="button" id="addButton">Add</button>
+        <div class="controls">
+            <button type="button" id="addButton">Save</button>
+        </div>
     </form>
 </template>
 <script>

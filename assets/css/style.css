@@ -1,0 +1,24 @@
+@import url(http://fonts.googleapis.com/css?family=The+Girl+Next+Door);
+html, body {
+    background: url('../images/stardust.png');
+    font-family: 'The Girl Next Door', cursive;
+}
+.title {
+    width: 800px;
+    margin: 80px auto 30px auto;
+}
+.title h1 {
+    line-height: 40px;
+    font-size: 60px;
+    color: #b6daff;
+    text-shadow: #728799 1px 1px 1px;
+}
+.title .subtitle {
+    margin: -45px auto auto 80px;
+    font-size: 20px;
+    text-shadow: #333 1px 1px 1px;
+}
+.container {
+    width: 800px;
+    margin: auto;
+}
