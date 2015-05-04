@@ -1,0 +1,54 @@
+<template>
+    <style>
+        .entry-container {
+            padding: 20px 30px;
+            border-bottom: dotted 1px #CCC;
+        }
+        .entry-container p {
+
+        }
+        .entry-info {
+            color: #999;
+            text-align: right;
+            font-size: 12px;
+        }
+    </style>
+    <div class="entry-container">
+        <p><content></content></p>
+        <div class="entry-info">Added on <span id="date"></span> at <span id="time"></span></div>
+    </div>
+</template>
+<script>
+    (function() {
+        // Creates an object based in the HTML Element prototype
+        var element = Object.create(HTMLElement.prototype);
+        // Gets content from <template>
+        var template = document.currentScript.ownerDocument.querySelector('template').content;
+
+        var shadowRoot = null;
+        // Fires when an instance of the element is created
+        element.createdCallback = function() {
+            // Creates the shadow root
+            shadowRoot = this.createShadowRoot();
+            // Adds a template clone into shadow root
+            var clone = document.importNode(template, true);
+            shadowRoot.appendChild(clone);
+        };
+        element.attributeChangedCallback = function(attr, oldVal, newVal) {
+            if (attr == "date") {
+                var date = new Date(newVal);
+                var monthNames = [
+                    "January", "February", "March",
+                    "April", "May", "June", "July",
+                    "August", "September", "October",
+                    "November", "December"
+                ];
+                shadowRoot.getElementById('date').innerHTML = date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+                shadowRoot.getElementById('time').innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            }
+        };
+        document.registerElement('journal-entry', {
+            prototype: element
+        });
+    }());
+</script>
