@@ -5,9 +5,7 @@
             background-color: rgba(255, 255, 255, 0.25);
             border-radius: 5px;
             margin: 20px 0;
-        }
-        .entry-container p {
-
+            position: relative;
         }
         .entry-info {
             color: #FFF;
@@ -15,8 +13,17 @@
             text-align: right;
             font-size: 14px;
         }
+        #delete-btn {
+            font-size: 32px;
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            color: #FFF;
+            cursor: pointer;
+        }
     </style>
     <div class="entry-container">
+        <span id="delete-btn">&times;</span>
         <p><content></content></p>
         <div class="entry-info">Added on <span id="date"></span> at <span id="time"></span></div>
     </div>
@@ -31,23 +38,30 @@
         var shadowRoot = null;
         // Fires when an instance of the element is created
         element.createdCallback = function() {
+//            console.log(element);
             // Creates the shadow root
             shadowRoot = this.createShadowRoot();
             // Adds a template clone into shadow root
             var clone = document.importNode(template, true);
             shadowRoot.appendChild(clone);
+            var removeBtn = shadowRoot.getElementById('delete-btn');
+            removeBtn.addEventListener('click', function(event){
+                console.log(this.data);
+            });
         };
         element.attributeChangedCallback = function(attr, oldVal, newVal) {
-            if (attr == "date") {
-                var date = new Date(newVal);
-                var monthNames = [
-                    "January", "February", "March",
-                    "April", "May", "June", "July",
-                    "August", "September", "October",
-                    "November", "December"
-                ];
-                shadowRoot.getElementById('date').innerHTML = date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
-                shadowRoot.getElementById('time').innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+            switch (attr) {
+                case "date":
+                    var date = new Date(newVal);
+                    var monthNames = [
+                        "January", "February", "March",
+                        "April", "May", "June", "July",
+                        "August", "September", "October",
+                        "November", "December"
+                    ];
+                    shadowRoot.getElementById('date').innerHTML = date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
+                    shadowRoot.getElementById('time').innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                    break;
             }
         };
         document.registerElement('journal-entry', {

@@ -17,13 +17,29 @@
             // Adds a template clone into shadow root
             var clone = document.importNode(template, true);
             shadowRoot.appendChild(clone);
-            document.addEventListener('add-entry', function(event){
+
+            function addEntry(data) {
                 var entry = document.createElement('journal-entry');
-                entry.setAttribute('date', event.detail.entry.date);
-                var content = document.createTextNode(event.detail.entry.text);
+                entry.setAttribute('date', data.date);
+                var content = document.createTextNode(data.text);
                 entry.appendChild(content);
                 shadowRoot.getElementById('entryList').appendChild(entry);
+            }
+
+            requirejs(['./services/store.js'], function(store){
+                var ls = store.getStore();
+                if (ls.length !== 0) {
+                    for (var i = 0; i < ls.length; i++) {
+                        addEntry(ls[i]);
+                    }
+                }
+                document.addEventListener('add-entry', function(event){
+                    addEntry(event.detail.entry);
+                    store.add(event.detail.entry);
+                });
             });
+
+
         };
         document.registerElement('entry-list', {
             prototype: element
